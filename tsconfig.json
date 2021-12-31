@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "jsx": "react",
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "baseUrl": "./",
+        "strict": false,
+        "strictNullChecks": true,
+        "allowSyntheticDefaultImports": true,
+        "skipLibCheck": true,
+        "experimentalDecorators": true,
+        "declaration": true,
+        "types": [
+            "node"
+        ]
+    }
+}
