@@ -3,10 +3,12 @@ const serve = require('rollup-plugin-serve');
 const { uglify } = require('rollup-plugin-uglify');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
-const postcss = require('rollup-plugin-postcss');
+// const postcss = require('rollup-plugin-postcss');
 const replace = require('@rollup/plugin-replace');
 const typescript = require('@rollup/plugin-typescript');
 const path = require("path");
+const dts = require("rollup-plugin-dts").default;
+import less from 'rollup-plugin-less';
 import pkg from './package.json';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -16,20 +18,28 @@ export default [
         // 入口
         input: isProduction ? "src/index.tsx" : "example/index.tsx",
         // 	输出
-        output: {
+        output: [{
             file: pkg.browser,
             format: "umd",
             sourcemap: !isProduction,
             name: "index"
         },
+        { file: pkg.main, format: 'cjs' },
+        { file: pkg.module, format: 'es' }
+        ],
         plugins: [
             nodeResolve(),
             commonjs(),
             typescript({ outDir: "./dist" }),
             // less
-            postcss({
-                extract: true,
-                minimize: isProduction,
+            // postcss({
+            //     extract: true,
+            //     minimize: isProduction,
+            // }),
+            less({
+                insert: isProduction ? false : true,
+                output: './dist/index.umd.css',
+                watch: true
             }),
             // babel
             babel({
@@ -56,5 +66,16 @@ export default [
                     contentBase: [path.join(__dirname)]
                 }),
         ]
+    },
+    {
+        input: "src/index.tsx",
+        output: [{
+            file: pkg.types,
+            format: "es"
+        }],
+        plugins: [
+            dts(),
+        ],
+        external: [/\.css$/u,/\.less$/u]
     }
 ]
