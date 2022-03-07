@@ -6,12 +6,29 @@
   "module": "es/index.esm.js",
   "types": "lib/index.d.ts",
   "browser": "dist/index.umd.js",
+  "files": [
+    "lib",
+    "es",
+    "typings.d.ts"
+  ],
   "scripts": {
     "start": "start-storybook -p 6006",
     "dev": "cross-env NODE_ENV=development rollup -c -w",
     "build": "cross-env NODE_ENV=production rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "prepublishOnly": "npm run build",
+    "changelog": "auto-changelog",
+    "release": "release-it"
+  },
+  "auto-changelog": {
+    "commitLimit": false,
+    "unreleased": true,
+    "package": false,
+    "commitUrl": "https://github.com/logtaillu/my-st-demo/commit/{id}",
+    "compareUrl": "https://github.com/logtaillu/my-st-demo/compare/{to}...{from}",
+    "sortCommits": "date-desc",
+    "output": "./CHANGELOG.md"
   },
   "repository": {
     "type": "git",
@@ -39,12 +56,14 @@
     "@types/node": "^17.0.5",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "auto-changelog": "^2.4.0",
     "babel-loader": "^8.2.3",
     "cross-env": "^7.0.3",
     "less": "^4.1.2",
     "less-loader": "^7.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "release-it": "^14.12.5",
     "rollup": "^2.62.0",
     "rollup-plugin-dts": "^4.2.0",
     "rollup-plugin-less": "^1.1.3",
