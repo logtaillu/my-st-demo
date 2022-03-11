@@ -1,5 +1,5 @@
 import React from "react";
-import Test from "../index";
+import { Test } from "../index";
 
 export default {
     title: 'Example/Test',
@@ -17,7 +17,7 @@ const Template = (args) => <Test {...args} />;
 
 export const Tested = Template.bind({});
 Tested.args = {
-  text: "ddd",
+    text: "ddd",
 };
 
 export const Testea = Template.bind({});
